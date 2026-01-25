@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
     "name": "infinityui",
     "version-string": "2.0.2",
     "description": "",
@@ -7,5 +8,5 @@
     "dependencies": [
         "commonlibsse-ng"
     ],
-    "builtin-baseline": "8d3649ba34aab36914ddd897958599aa0a91b08e"
+    "builtin-baseline": "8f6860b7de3b3851ef3694054732f7bf08d4a6d3"
 }
