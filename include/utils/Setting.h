@@ -46,7 +46,11 @@ namespace utils
 						return;
 					}
 				} else if constexpr (std::is_same_v<T, int>) {
+#if RUNTIME_LINE == 17
+					if (GetType() == Type::kInteger) {  // CommonLibSSE-NG 7.2 renamed kSignedInteger
+#else
 					if (GetType() == Type::kSignedInteger) {
+#endif
 						data.i = a_data;
 
 						return;

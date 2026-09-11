@@ -1,7 +1,11 @@
 MIT License
 
-Copyright (c) 2022 alexsylex
-Copyright (c) 2026 ApocryphaRealm (Skyrim 1.7.x build line and later changes)
+Copyright (c) 2026 Alan Tse and devbench contributors
+
+This license applies ONLY to the devbench cross-plugin API glue files
+(DevBenchAPI.h and DevBenchAPI.cpp), so that any SKSE plugin may vendor them to
+interoperate with devbench. The devbench plugin itself is licensed GPL-3.0 (see
+COPYING and EXCEPTIONS); this MIT grant does not extend to the rest of devbench.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

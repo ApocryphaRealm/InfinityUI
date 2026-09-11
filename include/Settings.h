@@ -14,6 +14,8 @@ namespace settings
 
 	namespace debug
 	{
-		inline logger::level logLevel = logger::level::err;
+		// Trace, matching the shipped InfinityUI.ini's uLogLevel=0 (rules 14 and 16) - upstream compiled
+		// err here while shipping 0, so "no INI" and "the shipped INI" logged differently.
+		inline logger::level logLevel = logger::level::trace;
 	}
 }
