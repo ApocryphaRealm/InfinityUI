@@ -39,10 +39,14 @@ foreach ($l in $lines.Keys) {
     $v = (Get-Item -LiteralPath (Join-Path $repo "build\$($lines[$l])\InfinityUI.dll")).VersionInfo.FileVersion
     if ($v -ne "$Version.0") { throw "$l DLL reports $v, not $Version.0 - rebuild it after the version bump" }
 }
-$share = Join-Path $repo 'build\relwithdebinfo-17\vcpkg_installed\x64-windows-static-md\share\commonlibsse-ng'
-foreach ($n in 'copyright', 'EXCEPTIONS.md') {
-    if (-not (Test-Path -LiteralPath (Join-Path $share $n))) { throw "missing $share\$n - configure the 1.7 line first" }
-}
+# The GPL texts come from the 1.7 line's own CommonLibSSE-NG install. That lives inside the build tree
+# normally, and under C:\vcpkg-installed\ once the rule-45 strip has relocated VCPKG_INSTALLED_DIR.
+$shareCandidates = @(
+    (Join-Path $repo 'build\relwithdebinfo-17\vcpkg_installed\x64-windows-static-md\share\commonlibsse-ng'),
+    'C:\vcpkg-installed\InfinityUI-17\x64-windows-static-md\share\commonlibsse-ng'
+)
+$share = $shareCandidates | Where-Object { (Test-Path -LiteralPath (Join-Path $_ 'copyright')) -and (Test-Path -LiteralPath (Join-Path $_ 'EXCEPTIONS.md')) } | Select-Object -First 1
+if (-not $share) { throw "CommonLibSSE-NG's copyright/EXCEPTIONS.md not found - looked in:`n  " + ($shareCandidates -join "`n  ") }
 
 foreach ($d in 'Common\SKSE\Plugins', 'fomod', 'Line-SE-AE16\SKSE\Plugins', 'Line-17\SKSE\Plugins') {
     New-Item -ItemType Directory -Force -Path (Join-Path $F $d) | Out-Null

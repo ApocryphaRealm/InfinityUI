@@ -1,6 +1,6 @@
 {
   "name": "infinityui-17",
-  "version-string": "2.1.0",
+  "version-string": "2.1.1",
   "description": "Infinity UI - patches the game's Scaleform menus with replacement instances other mods supply. [Skyrim 1.7.x build line: CommonLibSSE-NG 7.2.0, cmake/ports-17]",
   "homepage": "https://github.com/ApocryphaRealm/InfinityUI",
   "license": "MIT",

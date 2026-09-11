@@ -3,7 +3,15 @@
 A maintained build of alexsylex's Infinity UI (MIT, https://github.com/alexsylex/InfinityUI; Nexus 74483,
 last release 2.0.3 in October 2024). Newest first. Each entry carries its version-ledger status (rule 61).
 
-## 2.1.0 - untested
+## 2.1.1 - working (proven 2026-09-11 on Skyrim 1.7.104 and SE 1.5.97, after the strip rebuild)
+
+- Rebuilt so the DLLs carry no build-machine paths (rule 45): CommonLibSSE-NG is compiled with
+  vcpkg's installed directory relocated out of the project folder and its binary cache disabled, so
+  the library's own absolute paths no longer name this project's build tree. No behaviour change -
+  the version exists because an antivirus false-positive report is per file hash, so a rebuilt
+  binary has to be distinguishable from the one it replaces.
+
+## 2.1.0 - working (proven 2026-09-11 on Skyrim 1.7.104 and SE 1.5.97)
 
 - **Skyrim 1.7.x support.** A second build line against CommonLibSSE-NG 7.2.0, which reads Address
   Library format 5 (1.7.99 / 1.7.104). The two `BSScaleformManager::LoadMovie` calls Infinity UI hooks
