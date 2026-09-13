@@ -1,9 +1,9 @@
 ﻿{
     "name": "infinityui",
-    "version-string": "2.1.1",
+    "version-string": "2.1.2",
     "description": "Infinity UI - patches the game's Scaleform menus with replacement instances other mods supply. [SE 1.5.97 / AE 1.6.x build line: CommonLibSSE-NG 3.7, cmake/ports]",
     "homepage": "https://github.com/ApocryphaRealm/InfinityUI",
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "dependencies": [
         "commonlibsse-ng",
         "spdlog"
