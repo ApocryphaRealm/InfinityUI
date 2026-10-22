@@ -18,6 +18,10 @@ last release 2.0.3 in October 2024). Newest first. Each entry carries its versio
     it when it is missing.
   No change to what the hooks do.
 
+### Fixed
+- The Skyrim 1.7.x DLL's log lost its first two lines (the 'Loading InfinityUI' line and the [AddressLibrary] line): CommonLibSSE-NG 7.2 started its own logger in SKSE::Init and recreated the file. It no longer does.
+- The SE 1.5.97 / AE 1.6.x DLL on Skyrim 1.7.x still showed the bare 'failed to open address library file' and closed the game, because the hook's LoadMovie address was resolved by a static object built while the DLL loaded - before the build-line check could run. It is now resolved only when the hooks are installed, so the wrong-build message appears and the game continues.
+
 ## 2.1.1 - working (proven 2026-09-11 on Skyrim 1.7.104 and SE 1.5.97, after the strip rebuild)
 
 - Rebuilt so the DLLs carry no build-machine paths (rule 45): CommonLibSSE-NG is compiled with

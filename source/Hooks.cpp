@@ -64,7 +64,7 @@ namespace hooks
 	{
 		const std::uintptr_t base = REL::Module::get().base();
 		logger::info("Hooked BSScaleformManager::LoadMovie (+0x{:X}): Advance call at +0x{:X}, InitExtensions call at +0x{:X}",
-			BSScaleformManager::LoadMovie.address() - base, iui::state::advanceRva.load(), iui::state::initExtensionsRva.load());
+			BSScaleformManager::LoadMovieAddress() - base, iui::state::advanceRva.load(), iui::state::initExtensionsRva.load());
 		logger::debug("Original InitExtensions target (InvokeArgs) at +0x{:X}", GFxMovieRoot::InvokeArgs.address() - base);
 	}
 

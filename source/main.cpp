@@ -74,7 +74,14 @@ SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 		logger::info("[AddressLibrary] runtime {} ({}); opened \"{}\": present", r.runtime, r.edition, r.file);
 	}
 
+#if RUNTIME_LINE == 17
+	// CommonLibSSE-NG 7.2's Init(a_skse, a_log = true) starts its own logger, which recreates InfinityUI.log empty
+	// and wipes the two lines above (the 1.7.104 log of the 2.1.3 test opened at "InfinityUI v2-1-3-0"). This
+	// plugin's logger is already running, so CommonLib's is not wanted.
+	SKSE::Init(a_skse, false);
+#else
 	SKSE::Init(a_skse);
+#endif
 
 	settings::Init(std::string(plugin->GetName()) + ".ini");
 

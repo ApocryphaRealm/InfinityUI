@@ -14,9 +14,13 @@ namespace hooks
 
 	public:
 
-		static inline REL::Relocation<bool(*)(const RE::BSScaleformManager*, RE::IMenu*,
-											  RE::GPtr<RE::GFxMovieView>&, const char*,
-											  RE::GFxMovieView::ScaleModeType, float)> LoadMovie{ LoadMovieId };
+		// Resolved when asked, never at DLL load. This used to be a static REL::Relocation built from the ID, which
+		// the C runtime constructs while the DLL is being loaded - before SKSEPluginLoad runs - and constructing it
+		// opens the Address Library. On a game the build cannot read (the SE/AE DLL on Skyrim 1.7.x) that showed
+		// CommonLibSSE-NG's bare "failed to open address library file" and ended the game before the build-line
+		// check in main.cpp could say which installer option to pick (2.1.3 test, 2026-10-22). Nothing in this
+		// plugin may resolve an address at namespace or static-member scope.
+		static std::uintptr_t LoadMovieAddress() { return LoadMovieId.address(); }
 	};
 
 	class GFxMovieRoot
@@ -103,7 +107,7 @@ namespace hooks
 		};
 
 		const std::uintptr_t base = REL::Module::get().base();
-		const std::uintptr_t loadMovie = BSScaleformManager::LoadMovie.address();
+		const std::uintptr_t loadMovie = BSScaleformManager::LoadMovieAddress();
 		const std::uintptr_t advanceSite = loadMovie + AdvanceCallOffset();
 		const std::uintptr_t initExtensionsSite = loadMovie + InitExtensionsCallOffset();
 
