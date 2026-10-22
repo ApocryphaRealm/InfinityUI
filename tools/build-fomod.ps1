@@ -55,7 +55,8 @@ foreach ($d in 'Common\SKSE\Plugins', 'fomod', 'Line-SE-AE16\SKSE\Plugins', 'Lin
 Copy-Item -LiteralPath (Join-Path $repo 'dist\SKSE\Plugins\InfinityUI.ini') -Destination "$F\Common\SKSE\Plugins\"
 $readme = [IO.File]::ReadAllText((Join-Path $repo 'dist\README.txt'))
 [IO.File]::WriteAllText("$F\Common\README.txt", ([regex]::Replace($readme, '(?m)^Version \d+\.\d+\.\d+', "Version $Version", 'None')), $utf8)
-Copy-Item -LiteralPath (Join-Path $repo 'LICENSE') -Destination "$F\Common\LICENSE-InfinityUI-MIT.txt"
+Copy-Item -LiteralPath (Join-Path $repo 'LICENSE') -Destination "$F\Common\LICENSE-InfinityUI-GPL-3.0.txt"
+foreach ($n in 'NOTICE.md', 'THIRD_PARTY_NOTICES.md') { Copy-Item -LiteralPath (Join-Path $repo $n) -Destination "$F\Common\$n" }
 
 foreach ($l in $lines.Keys) {
     foreach ($ext in 'dll', 'pdb') {
@@ -68,17 +69,13 @@ Copy-Item -LiteralPath (Join-Path $share 'EXCEPTIONS.md') -Destination "$F\Line-
 $notice = @"
 Infinity UI $Version - Skyrim 1.7.x build line
 
-This DLL statically links CommonLibSSE-NG 7.2.0 (https://github.com/alandtse/CommonLibSSE-NG,
-commit 7a60f4de794095d7b0f8928d1b930a52e9a7da83), which is licensed GPL-3.0-or-later WITH
-Modding Exception AND GPL-3.0 Linking Exception. The combined work in this folder is therefore
-distributed under the GNU General Public License v3.0 or later (LICENSE-GPL-3.0.txt), with the
-library's exceptions (CommonLibSSE-NG-EXCEPTIONS.md).
+This DLL statically links CommonLibSSE-NG 7.2.0 (https://github.com/alandtse/CommonLibSSE-NG, commit
+7a60f4de794095d7b0f8928d1b930a52e9a7da83), GPL-3.0-or-later WITH Modding Exception AND GPL-3.0 Linking Exception
+(CommonLibSSE-NG-EXCEPTIONS.md in this folder).
 
-Infinity UI's own source code remains MIT-licensed (alexsylex 2022, ApocryphaRealm 2026) and is the
-corresponding source: https://github.com/ApocryphaRealm/InfinityUI (tag v$Version).
-
-The SE 1.5.97 / AE 1.6.x build line (folder Line-SE-AE16) links CommonLibSSE-NG 3.7 (MIT) and is
-MIT throughout.
+Infinity UI as a whole - both build lines and its source - is Copyright (C) 2026 ApocryphaRealm and licensed
+GPL-3.0-or-later (LICENSE-GPL-3.0.txt here; LICENSE-InfinityUI-GPL-3.0.txt and NOTICE.md with the common files).
+Corresponding source: https://github.com/ApocryphaRealm/InfinityUI (tag v$Version). Third-party notices: THIRD_PARTY_NOTICES.md.
 "@
 [IO.File]::WriteAllText("$F\Line-17\NOTICE.txt", $notice, $utf8)
 
@@ -107,21 +104,37 @@ $config = @"
 				<group name="Game version" type="SelectExactlyOne">
 					<plugins order="Explicit">
 						<plugin name="Skyrim SE 1.5.97 or AE 1.6.1170">
-							<description>For Skyrim Special Edition 1.5.97 and Anniversary Edition 1.6.x (1.6.1170 is the last Steam build before 1.7). One DLL covers both. Built on CommonLibSSE-NG 3.7 (MIT). Not sure which you have? Right-click SkyrimSE.exe, Properties, Details, and read the file version.</description>
+							<description>For Skyrim Special Edition 1.5.97 and Anniversary Edition 1.6.x (1.6.1170 is the last Steam build before 1.7). One DLL covers both. Built on CommonLibSSE-NG 3.7 (MIT). Not sure which you have? Right-click SkyrimSE.exe, Properties, Details, and read the file version. Do NOT pick this for Skyrim 1.7.x: it cannot start there.</description>
 							<files>
 								<folder source="Line-SE-AE16" destination="" priority="0" />
 							</files>
 							<typeDescriptor>
-								<type name="Recommended" />
+								<dependencyType>
+									<defaultType name="Recommended" />
+									<patterns>
+										<pattern>
+											<dependencies operator="And"><gameDependency version="1.7.0.0" /></dependencies>
+											<type name="Optional" />
+										</pattern>
+									</patterns>
+								</dependencyType>
 							</typeDescriptor>
 						</plugin>
 						<plugin name="Skyrim 1.7.x (current Steam version)">
-							<description>For Skyrim 1.7.99 and 1.7.104 - what Steam installs since 28 August 2026. Needs SKSE 2.3.x and Address Library for SKSE Plugins v13 or newer. Built on CommonLibSSE-NG 7.2.0; this DLL is distributed under GPL-3.0-or-later (the licence texts install with it).</description>
+							<description>For Skyrim 1.7.99 and 1.7.104 - what Steam installs since 28 August 2026 (SkyrimSE.exe file version 1.7.x). Needs SKSE 2.3.x and Address Library for SKSE Plugins v13 or newer. Built on CommonLibSSE-NG 7.2.0; this DLL is distributed under GPL-3.0-or-later (the licence texts install with it).</description>
 							<files>
 								<folder source="Line-17" destination="" priority="0" />
 							</files>
 							<typeDescriptor>
-								<type name="Optional" />
+								<dependencyType>
+									<defaultType name="Optional" />
+									<patterns>
+										<pattern>
+											<dependencies operator="And"><gameDependency version="1.7.0.0" /></dependencies>
+											<type name="Recommended" />
+										</pattern>
+									</patterns>
+								</dependencyType>
 							</typeDescriptor>
 						</plugin>
 					</plugins>

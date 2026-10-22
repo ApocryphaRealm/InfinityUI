@@ -1,6 +1,6 @@
 Infinity UI
 ===========
-Version 2.1.0
+Version 2.1.3
 
 This build's own number. alexsylex's last Nexus release of Infinity UI is 2.0.3 (October 2024); this
 continues from there.
@@ -20,7 +20,8 @@ The installer asks which Skyrim you have:
   * Skyrim SE 1.5.97 or AE 1.6.1170 - one DLL covers both.
   * Skyrim 1.7.x - what Steam installs since 28 August 2026. Needs SKSE 2.3.x and Address Library for
     SKSE Plugins v13 or newer.
-Not sure? Right-click SkyrimSE.exe, Properties, Details, and read the file version.
+Not sure? Right-click SkyrimSE.exe, Properties, Details, and read the file version. The SE/AE DLL cannot
+run on 1.7.x: pick by version. A DLL that does not match the game loads inert and says so.
 
 INSTALLING
 ----------
@@ -43,7 +44,15 @@ game untouched instead of patching blind.
 
 LICENCE
 -------
-MIT - alexsylex (2022) and ApocryphaRealm (2026). The Skyrim 1.7.x DLL statically links CommonLibSSE-NG
+GPL-3.0-or-later - ApocryphaRealm (2026), from alexsylex's MIT original (2022; notice in THIRD_PARTY_NOTICES.md). The Skyrim 1.7.x DLL statically links CommonLibSSE-NG
 7.2.0 and is distributed under GPL-3.0-or-later; NOTICE.txt beside it explains.
 
 Source: https://github.com/ApocryphaRealm/InfinityUI
+
+WHAT CHANGED
+
+Version 2.1.3
+Fixed "failed to open address library file" on Skyrim 1.7.x: the installer now pre-selects the build that matches your game, and a DLL that does not match the game loads inert with a message that says which option to pick, instead of CommonLibSSE-NG's bare error.
+
+Version 2.1.2
+Relicensed under GPL-3.0-or-later, as the libraries it is built on require; no gameplay change.

@@ -3,6 +3,21 @@
 A maintained build of alexsylex's Infinity UI (MIT, https://github.com/alexsylex/InfinityUI; Nexus 74483,
 last release 2.0.3 in October 2024). Newest first. Each entry carries its version-ledger status (rule 61).
 
+## 2.1.3 - untested
+
+- **Fix: "failed to open address library file" on Skyrim 1.7.x.** The installer's first choice (SE 1.5.97 /
+  AE 1.6.x) was pre-selected whatever the game, and that DLL cannot run on 1.7: its CommonLibSSE-NG 3.7
+  treats a 1.7 game as SE and looks for `version-1-7-104-0.bin`, which does not exist (1.7 ships
+  `versionlib-1-7-104-0.bin`, a database format 3.7 cannot read anyway), so it died with the library's bare
+  message. Now:
+  - the installer asks the mod manager for the game version and pre-selects the 1.7.x build on a 1.7 game
+    (and the SE/AE build otherwise); the SE/AE option says it cannot start on 1.7;
+  - both DLLs check the game version before touching the Address Library, and a build that does not match the
+    game loads inert with a message that says which installer option to pick, instead of the bare error;
+  - both DLLs log the Address Library file they need (`[AddressLibrary]`) and load inert with a message naming
+    it when it is missing.
+  No change to what the hooks do.
+
 ## 2.1.1 - working (proven 2026-09-11 on Skyrim 1.7.104 and SE 1.5.97, after the strip rebuild)
 
 - Rebuilt so the DLLs carry no build-machine paths (rule 45): CommonLibSSE-NG is compiled with
