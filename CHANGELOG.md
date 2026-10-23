@@ -3,7 +3,7 @@
 A maintained build of alexsylex's Infinity UI (MIT, https://github.com/alexsylex/InfinityUI; Nexus 74483,
 last release 2.0.3 in October 2024). Newest first. Each entry carries its version-ledger status (rule 61).
 
-## 2.1.3 - untested
+## 2.1.3 - working (proven 2026-10-22 on Skyrim 1.7.104 and SE 1.5.97; posted to Nexus 2026-10-22)
 
 - **Fix: "failed to open address library file" on Skyrim 1.7.x.** The installer's first choice (SE 1.5.97 /
   AE 1.6.x) was pre-selected whatever the game, and that DLL cannot run on 1.7: its CommonLibSSE-NG 3.7
